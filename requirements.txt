@@ -1,0 +1,6 @@
+fastapi[standard]==0.115.2
+pydantic==2.9.2
+uvicorn[standard]==0.32.0
+passlib[bcrypt]==1.7.4
+pyjwt==2.9.0
+motor==3.6.0
