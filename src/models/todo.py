@@ -2,6 +2,7 @@ from fastapi import Header
 from typing import Annotated
 
 from pydantic import BaseModel,ConfigDict, StringConstraints
+from datetime import datetime
 
 class CreateTodo(BaseModel):
     title: Annotated[str, StringConstraints(min_length=2)]
@@ -12,9 +13,17 @@ class CreateTodo(BaseModel):
 
 
 
+class ResponseTodo(BaseModel):
+    id: str
+    title: str
+    completed: bool
+    description: str
+    created_at: datetime
+    updated_at: datetime
+
 
 
 class CommonHeaders(BaseModel):
-    Authorization: Annotated[str, Header()]
+    authorization: Annotated[str, Header()]
     x_length: int = 100
     

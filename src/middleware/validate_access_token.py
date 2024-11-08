@@ -1,10 +1,8 @@
 from fastapi import HTTPException, status,Request
-from core.security import security_config
-import jwt
+from utils.auth_handler import decode_jwt
 
 async def ValidateAccessToken(request: Request) -> Request:
-        
-        access_token =  request.headers.get('Authorization') 
+        access_token =  request.headers.get('authorization') 
 
         if not access_token:
             raise HTTPException(
@@ -12,10 +10,15 @@ async def ValidateAccessToken(request: Request) -> Request:
                 detail='Not authenticated'
             )
 
-        access_token = access_token.split(' ')
+        bearer, access_token = access_token.split(' ')
 
-        is_valid_signature = jwt.decode(access_token[1], security_config.SECRET_KEY, algorithms=[security_config.ALGORITHM])
+        if bearer != 'Bearer':
+          raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Not authenticated'
+        )
 
+        is_valid_signature = decode_jwt(access_token)
 
         if not is_valid_signature:
             raise HTTPException(
