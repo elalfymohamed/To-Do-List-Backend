@@ -2,10 +2,10 @@ from fastapi import HTTPException,status
 from models.todo import CreateTodo,ResponseTodo
 from utils.decode_token import decode_token
 from datetime import datetime
-from schemas.todo import todo_item
+from schemas.todo import todo_item,todos_list
 
+# create todo service
 async def create_todo(todo: CreateTodo, db: dict, headers: dict) -> ResponseTodo:
-
     todo_dict = todo.model_dump()
 
     user_data = decode_token(headers)
@@ -28,5 +28,20 @@ async def create_todo(todo: CreateTodo, db: dict, headers: dict) -> ResponseTodo
     return todo_item({**todo_dict, "_id": str(new_todo.inserted_id)})
 
 
+    
+#  get todos service
+
+async def get_todos(limit,db: dict, headers: dict) -> ResponseTodo:
+    user_data = decode_token(headers)
+
+    is_user_exist = await db["users"].find_one({"email": user_data["email"]})
+
+    if not is_user_exist:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    todos = await db["todos"].find({"user_id": str(is_user_exist["_id"])}).sort("created_at", -1).to_list(limit)
+
+
+    return todos_list(todos)
     
 

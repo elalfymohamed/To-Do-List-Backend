@@ -25,5 +25,5 @@ class ResponseTodo(BaseModel):
 
 class CommonHeaders(BaseModel):
     authorization: Annotated[str, Header()]
-    x_length: int = 100
+
     
