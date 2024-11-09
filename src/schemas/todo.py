@@ -5,7 +5,8 @@ def todo_item (item) -> dict:
         "completed": item["completed"],
         "description": item["description"],
         "created_at": item["created_at"],
-        "updated_at": item["updated_at"]
+        "updated_at": item["updated_at"],
+        "deleted_at": item["deleted_at"]
     }
 
 

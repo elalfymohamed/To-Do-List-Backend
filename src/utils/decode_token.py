@@ -21,11 +21,5 @@ def decode_token(headers: dict) -> dict:
 
     decoded_token = decode_jwt(token)
 
-    if not decoded_token:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Not authenticated'
-        )
-
     return decoded_token
 
