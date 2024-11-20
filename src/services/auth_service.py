@@ -7,6 +7,20 @@ from utils.pwd import get_password_hash,verify_password
 
 async def Signup(user: User,db: dict, response: dict = None) -> Token:
     
+    """
+    Create a new user
+
+    Args:
+    - user (User): new user
+    - db (dict): database connection
+    - response (dict, optional): response object to set the cookie. Defaults to None.
+
+    Raises:
+    - HTTPException(400): if the user already exist
+
+    Returns:
+    - Token: a token access with the user id and email
+    """
     user_dict = user.model_dump()
 
     is_user_exist = await db["users"].find_one({"email": user_dict["email"]})
@@ -40,6 +54,20 @@ async def Signup(user: User,db: dict, response: dict = None) -> Token:
     
 async def Login(login: LoginData,db: dict, response: dict = None) -> Token:
 
+    """
+    Login a user and return a token access.
+
+    Args:
+    - login (LoginData): login data of the user.
+    - db (dict): database connection.
+    - response (dict, optional): response object to set the cookie. Defaults to None.
+
+    Raises:
+    - HTTPException(404): if the user do not exist or email or password is incorrect.
+
+    Returns:
+    - Token: a token access with the user id and email.
+    """
     message_error = HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message": "Email or Password is incorrect"})
 
     user_dict = login.model_dump()

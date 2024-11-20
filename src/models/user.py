@@ -3,6 +3,7 @@ from typing import Annotated
 
 from pydantic import BaseModel,ConfigDict, EmailStr, StringConstraints,field_validator
 
+from datetime import datetime
 
 class User(BaseModel):
     last_name: Annotated[str, StringConstraints(min_length=2)]
@@ -19,3 +20,15 @@ class User(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
+
+class ResponseUser(BaseModel):
+    email: EmailStr
+    username: str
+    id: str
+    last_name: str
+    first_name: str
+    created_at: datetime
+    updated_at: datetime
+    
+    model_config = ConfigDict(from_attributes=True)

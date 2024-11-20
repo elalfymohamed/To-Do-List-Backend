@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 from routes.auth import auth_router
 from routes.todo import todo_router
+from routes.user import user_router
 
 
 load_dotenv()
@@ -29,5 +30,5 @@ app.add_middleware(
 
 
 app.include_router(auth_router)
-
 app.include_router(todo_router)
+app.include_router(user_router)
