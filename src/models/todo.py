@@ -13,6 +13,19 @@ class CreateTodo(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class UpdateTodo(BaseModel):
+    title: Annotated[str, StringConstraints(min_length=2)]
+    completed: bool = False
+    description: Annotated[str, StringConstraints(min_length=10)]
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+
+class DeleteTodo(BaseModel):
+    deleted_at: datetime
+    id: str
+
 
 class ResponseTodo(BaseModel):
     id: str
@@ -21,11 +34,12 @@ class ResponseTodo(BaseModel):
     description: str
     created_at: datetime
     updated_at: datetime
-    deleted_at: datetime
+    deleted_at: None = None | datetime
 
 
 class ResponseDeleteTodo(BaseModel):
     id: str
+    detail: str
 
 
 class ResponseTodos(BaseModel):
