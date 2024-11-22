@@ -43,7 +43,6 @@ async def delete_todo_api(todo: DeleteTodo, headers: Annotated[CommonHeaders, He
     return await delete_todo(todo,db,headers)
 
 
-# recently deleted todos
 @todo_router.get("/recently-deleted", response_model=ResponseTodos, tags=["todos"], description="Get recently deleted todos", response_description="Get recently deleted todos", status_code=status.HTTP_200_OK)
 async def recently_deleted_todos_api(headers: Annotated[CommonHeaders, Header()],db=Depends(get_db),limit:int | None = None):
     return await recently_deleted_todos(limit,db,headers)
