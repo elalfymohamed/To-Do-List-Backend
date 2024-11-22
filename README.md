@@ -98,7 +98,7 @@ To run this project, you will need to add the following environment variables to
 ```bash
 
   DB_URL=<your_mongo_uri>
-  DB_NAME=<your_mongo_colaction>
+  DB_NAME=<your_mongo_collection>
 
   SECRET_KEY=<your_jwt_secret>
   ALGORITHM=<your_jwt_secret>
