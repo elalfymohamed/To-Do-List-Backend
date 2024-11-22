@@ -28,7 +28,7 @@ async def get_todo_by_id_api(id: str, headers: Annotated[CommonHeaders, Header()
     return await get_todo_by_id(id, db,headers)
 
 
-@todo_router.delete("/soft-delete/{id}", response_model=ResponseDeleteTodo, tags=["todos"], description="Soft Delete todo", response_description="Soft Delete todo", status_code=status.HTTP_200_OK)
+@todo_router.patch("/soft-delete/{id}", response_model=ResponseDeleteTodo, tags=["todos"], description="Soft Delete todo", response_description="Soft Delete todo", status_code=status.HTTP_200_OK)
 async def soft_delete_todo_api(id: str, headers: Annotated[CommonHeaders, Header()],db=Depends(get_db)):
     return await soft_delete_todo(id,db,headers)
 
