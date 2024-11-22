@@ -39,3 +39,12 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"expires": int(expire.timestamp())})
     encoded_jwt = jwt.encode(to_encode, security_config.SECRET_KEY, algorithm=security_config.ALGORITHM)
     return encoded_jwt
+
+
+
+
+def create_reset_token(data: dict):
+    to_encode = data.copy()
+    
+    encoded_jwt = jwt.encode(to_encode, security_config.SECRET_KEY, algorithm=security_config.ALGORITHM)
+    return encoded_jwt
